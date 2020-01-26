@@ -10,17 +10,19 @@ public class Enemy : MonoBehaviour
 
     [SerializeField] GameObject laserPrefab;
     [SerializeField] float projectileSpeed = 2f;
+    [SerializeField] GameObject deathVFX;
+    [SerializeField] float explosionDuration = 1f;
 
-    void Start()
-    {
-        shotCounter = Random.Range(minTimeBetweenShots, maxTimeBetweenShots);
-    }
+    [Header("Audio")]
+    [SerializeField] AudioClip deathSFX;
+    [Range(0.0f, 1.0f)] [SerializeField] float deathVolume = 1f;
+    [SerializeField] AudioClip laserSFX;
+    [Range(0.0f, 1.0f)] [SerializeField] float laserVolume = 0.25f;
 
-    // Update is called once per frame
-    void Update()
-    {
-        CountDownAndShoot();
-    }
+    
+    void Start() { shotCounter = Random.Range(minTimeBetweenShots, maxTimeBetweenShots); }
+
+    void Update() { CountDownAndShoot(); }
 
     private void CountDownAndShoot()
     {
@@ -34,6 +36,7 @@ public class Enemy : MonoBehaviour
 
     private void Fire()
     {
+        AudioSource.PlayClipAtPoint(laserSFX, Camera.main.transform.position, laserVolume);
         GameObject laser = Instantiate(
             laserPrefab,
             transform.position,
@@ -54,6 +57,18 @@ public class Enemy : MonoBehaviour
     {
         health -= dd.GetDamage();
         if (health <= 0)
-            Destroy(gameObject);
+            Die();
+    }
+
+    private void Die()
+    {
+        AudioSource.PlayClipAtPoint(deathSFX, Camera.main.transform.position, deathVolume);
+        Destroy(gameObject);
+        GameObject explosion = Instantiate(
+            deathVFX,
+            transform.position,
+            transform.rotation
+        ) as GameObject;
+        Destroy(explosion, explosionDuration);
     }
 }

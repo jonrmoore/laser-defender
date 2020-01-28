@@ -19,7 +19,6 @@ public class Enemy : MonoBehaviour
     [SerializeField] AudioClip laserSFX;
     [Range(0.0f, 1.0f)] [SerializeField] float laserVolume = 0.25f;
 
-    
     void Start() { shotCounter = Random.Range(minTimeBetweenShots, maxTimeBetweenShots); }
 
     void Update() { CountDownAndShoot(); }
@@ -49,8 +48,8 @@ public class Enemy : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D other)
     {
         DamageDealer damageDealer = other.gameObject.GetComponent<DamageDealer>();
-        Destroy(other.gameObject);
         ProcessHit(damageDealer);
+        Destroy(other.gameObject);
     }
 
     private void ProcessHit(DamageDealer dd)

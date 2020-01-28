@@ -22,6 +22,8 @@ public class Player : MonoBehaviour
     [Range(0.0f, 1.0f)] [SerializeField] float deathVolume = 0.75f;
     [SerializeField] AudioClip laserSFX;
     [Range(0.0f, 1.0f)] [SerializeField] float laserVolume = 0.25f;
+    // [Header("Level Loader")]
+    // [SerializeField] GameObject levelLoader;
 
     Coroutine firingCoroutine;
 
@@ -104,6 +106,8 @@ public class Player : MonoBehaviour
     private void Die()
     {
         AudioSource.PlayClipAtPoint(deathSFX, Camera.main.transform.position, deathVolume);
+        FindObjectOfType<Level>().LoadGameOver();
+        // levelLoader.GetComponent<Level>().LoadGameOver();
         Destroy(gameObject);
     }
 }

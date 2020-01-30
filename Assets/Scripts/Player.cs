@@ -6,7 +6,7 @@ using UnityEngine;
 public class Player : MonoBehaviour
 {
     [Header("Player Health")]
-    [SerializeField] int playerHealth = 200;
+    [SerializeField] int playerHealth = 100;
 
     [Header("Player Movement")]
     [SerializeField] float moveSpeed = 10f;
@@ -105,9 +105,15 @@ public class Player : MonoBehaviour
     
     private void Die()
     {
+        playerHealth = 0;
         AudioSource.PlayClipAtPoint(deathSFX, Camera.main.transform.position, deathVolume);
         FindObjectOfType<Level>().LoadGameOver();
         // levelLoader.GetComponent<Level>().LoadGameOver();
         Destroy(gameObject);
+    }
+
+    public int GetPlayerHealth()
+    {
+        return playerHealth;
     }
 }

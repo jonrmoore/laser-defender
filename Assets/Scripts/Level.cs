@@ -8,7 +8,9 @@ public class Level : MonoBehaviour
     [SerializeField] float delayLoadTime = 3f;
    public void LoadGameScene(string name)
    {
-       SceneManager.LoadScene(name);
+        SceneManager.LoadScene(name);
+        if (name == "Game Core")
+            FindObjectOfType<GameSession>().ResetScore();
    }
 
    public void LoadStartMenu()

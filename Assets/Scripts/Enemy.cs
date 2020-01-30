@@ -12,6 +12,7 @@ public class Enemy : MonoBehaviour
     [SerializeField] float projectileSpeed = 2f;
     [SerializeField] GameObject deathVFX;
     [SerializeField] float explosionDuration = 1f;
+    [SerializeField] int pointsAwardedOnDestroy = 53;
 
     [Header("Audio")]
     [SerializeField] AudioClip deathSFX;
@@ -68,6 +69,7 @@ public class Enemy : MonoBehaviour
             transform.position,
             transform.rotation
         ) as GameObject;
+        FindObjectOfType<GameSession>().AddToScore(pointsAwardedOnDestroy);
         Destroy(explosion, explosionDuration);
     }
 }
